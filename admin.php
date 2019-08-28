@@ -1,3 +1,28 @@
+<?php require "login/loginheader.php";
+require "login/dbconf.php";
+$dbconn = mysqli_connect( $host, $username, $password, $db_name);
+
+function clean($str){
+    global $dbconn;
+    $str = trim($str);
+    $str = stripslashes($str);
+    $str = htmlentities($str,ENT_QUOTES);
+    $str = mysqli_real_escape_string($dbconn, $str);
+    return $str;
+}
+if(isset( $_SESSION['username'] ) ) {
+    $thisUser = clean($_SESSION['username']);
+}
+
+
+if(isset( $_Post['action'])) {
+$content  = mysql_real_escape_string($dbconn, $_POST['content']);
+$sqli = " UPDATE`members` SET `content`='".$content."' WHERE `username`='".$thisUser."'"; 
+$query1 = mysqli_query($dbconn, $sqli);
+
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -15,10 +40,35 @@
     </head>
     
     <body>
-        <div data-keditor="html">
-            <div id="content-area"></div>
-        </div>
+    <div class="btn btn-lg btn-info" id="save">Save</div>
         
+            <div id="content-area"></div>
+        
+        <script type="text/javascript">
+
+        $(function() {
+            $('#content-area').keditor();
+            $('#save').click(function()  {
+                 
+                 $.ajax ({
+                     type: 'post',
+                     data: {action: "send-content",
+                         content: $('#contnet-area').keditor('getContent')
+                     },
+
+                     success:function(data){
+                         console.log(data);
+                     },
+                     error : function(data){
+                        console.log(data);
+                     }
+                 });
+
+                 console.log($('#content-area').keditor('getContent'));
+            })
+
+        });
+        </script>
         <script type="text/javascript" src="./plugins/jquery-1.11.3/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="./plugins/bootstrap-3.4.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="./plugins/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
@@ -32,7 +82,7 @@
         <script type="text/javascript" src="./plugins/code-prettify/src/prettify.js"></script>
         <script type="text/javascript" src="./plugins/js-beautify-1.7.5/js/lib/beautify.js"></script>
         <script type="text/javascript" src="./plugins/js-beautify-1.7.5/js/lib/beautify-html.js"></script>
-        <!-- <script type="text/javascript" src="./js/examples.js"></script> -->
+       
         <script type="text/javascript" data-keditor="script">
             $(function () {
                 $('#content-area').keditor();
