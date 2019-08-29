@@ -1,4 +1,5 @@
 <?php require "login/loginheader.php";
+
 require "login/dbconf.php";
 $dbconn = mysqli_connect( $host, $username, $password, $db_name);
 
@@ -6,7 +7,7 @@ function clean($str){
     global $dbconn;
     $str = trim($str);
     $str = stripslashes($str);
-    $str = htmlentities($str,ENT_QUOTES);
+    $str = htmlentities($str, ENT_QUOTES);
     $str = mysqli_real_escape_string($dbconn, $str);
     return $str;
 }
@@ -15,10 +16,10 @@ if(isset( $_SESSION['username'] ) ) {
 }
 
 
-if(isset( $_Post['action'])) {
-$content  = mysql_real_escape_string($dbconn, $_POST['content']);
-$sqli = " UPDATE`members` SET `content`='".$content."' WHERE `username`='".$thisUser."'"; 
-$query1 = mysqli_query($dbconn, $sqli);
+if( isset( $_Post['action'] ) ){
+$content  = mysqli_real_escape_string($dbconn, $_POST['content']);
+$sql1 = " UPDATE `members` SET `content`='".$content."' WHERE `username`='".$thisUser."'"; 
+$query1 = mysqli_query($dbconn, $sql1);
 
 }
 ?>
@@ -40,11 +41,11 @@ $query1 = mysqli_query($dbconn, $sqli);
     </head>
     
     <body>
-    <div class="btn btn-lg btn-info" id="save">Save</div>
-        
-            <div id="content-area"></div>
-        
-        <script type="text/javascript">
+
+    <div class="btn btn-lg btn-info" id="save">Save</div>        
+            <div id="content-area"></div>    
+
+              <script type="text/javascript">
 
         $(function() {
             $('#content-area').keditor();
@@ -53,7 +54,7 @@ $query1 = mysqli_query($dbconn, $sqli);
                  $.ajax ({
                      type: 'post',
                      data: {action: "send-content",
-                         content: $('#contnet-area').keditor('getContent')
+                         content: $('#content-area').keditor('getContent')
                      },
 
                      success:function(data){
