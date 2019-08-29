@@ -15,9 +15,9 @@ $(document).ready(function () {
                 success: function (html) {
                     //console.log(html.response + ' ' + html.username);
                     if (html.response === 'true') {
-                        location.assign("../login.php");
+                        location.assign("../admin.php");
                     //    location.reload();
-                        return html.username;git
+                        return html.username;
                     } else {
                         $("#message").html(html.response);
                     }

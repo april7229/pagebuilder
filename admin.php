@@ -11,6 +11,7 @@ function clean($str){
     $str = mysqli_real_escape_string($dbconn, $str);
     return $str;
 }
+
 if(isset( $_SESSION['username'] ) ) {
     $thisUser = clean($_SESSION['username']);
 }
@@ -42,8 +43,38 @@ $query1 = mysqli_query($dbconn, $sql1);
     
     <body>
 
-    <div class="btn btn-lg btn-info" id="save">Save</div>        
-            <div id="content-area"></div>    
+    
+  <a class="navbar-brand" href="#">Brand</a>
+  
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="navbar-nav">
+
+      <li><a href="#" id="save">Save </a></li>    
+      <li><a href="#">View </a></li> 
+      <li><a href="login/logout.php">Log Out </a></li>     
+    
+  </div>
+  </div>
+  </div>
+</nav>
+    
+
+           
+            <div id="content-area">
+
+            <?php
+                $sql2 = "SELECT `content` FROM `members` WHERE `username`='".$thisUser."'";
+                $query2 = mysqli_query($dbconn, $sql2);
+                $row = mysqli_fetch_assoc($query2);
+
+                echo $row['content'];
+
+
+            ?>
+            
+            
+            
+            </div>    
 
               <script type="text/javascript">
 
@@ -52,23 +83,27 @@ $query1 = mysqli_query($dbconn, $sql1);
             $('#save').click(function()  {
                  
                  $.ajax ({
-                     type: 'post',
-                     data: {action: "send-content",
-                         content: $('#content-area').keditor('getContent')
-                     },
+                    type: 'post',
+                    data: {action: "send-content",
+                            content: $('#content-area').keditor('getContent')
+                    },
 
-                     success:function(data){
-                         console.log(data);
-                     },
+                    success: function(data){
+                    
+                        alert("saved");
+
+                    },
+
                      error : function(data){
-                        console.log(data);
+                    
                      }
                  });
 
-                 console.log($('#content-area').keditor('getContent'));
-            })
+                 
+            });
 
         });
+
         </script>
         <script type="text/javascript" src="./plugins/jquery-1.11.3/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="./plugins/bootstrap-3.4.1/js/bootstrap.min.js"></script>
