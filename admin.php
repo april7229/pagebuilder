@@ -3,6 +3,7 @@
 require "login/dbconf.php";
 $dbconn = mysqli_connect( $host, $username, $password, $db_name);
 
+
 function clean($str){
     global $dbconn;
     $str = trim($str);
@@ -17,7 +18,7 @@ if(isset( $_SESSION['username'] ) ) {
 }
 
 
-if( isset( $_Post['action'] ) ){
+if( isset( $_POST['action'] ) ){
 $content  = mysqli_real_escape_string($dbconn, $_POST['content']);
 $sql1 = " UPDATE `members` SET `content`='".$content."' WHERE `username`='".$thisUser."'"; 
 $query1 = mysqli_query($dbconn, $sql1);
@@ -38,27 +39,43 @@ $query1 = mysqli_query($dbconn, $sql1);
         <link rel="stylesheet" type="text/css" href="dist/css/keditor-components.css" data-type="keditor-style" />
         <!-- End of KEditor styles -->
         <link rel="stylesheet" type="text/css" href="./plugins/code-prettify/src/prettify.css" />
+        
         <link rel="stylesheet" type="text/css" href="./css/examples.css" />
+        <script>
+        $.widget.bridge('uiButton', $.ui.button);
+        $.widget.bridge('uitooltip, $.ui.tooltip');
+        $.fn.button = bsButton;
+        </script>
+        
     </head>
     
     <body>
 
-    
-  <a class="navbar-brand" href="#">Brand</a>
-  
-  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <div class="navbar-nav">
+<nav class="navbar navbar-default"> 
+<div class="container-fluid">
 
-      <li><a href="#" id="save">Save </a></li>    
-      <li><a href="#">View </a></li> 
-      <li><a href="login/logout.php">Log Out </a></li>     
-    
-  </div>
-  </div>
-  </div>
+<div class="navbar-header">
+
+<button type='button' class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse" >
+<span class="sr-only"> Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+
+<a class="navbar-brand" href="#">Brand</a>
+</div>
+
+<div class="collapse navbar-collapse" id= "bs-example-navbar-collapse-1">
+<ul class="nav navbar-nav">
+
+<li><a href="#"id="save">Save</a></li>
+<li><a href="#">View</a></li>  
+<li><a href="login/loginout.php">Logout</a></li>  
+</ul>
+
+</div>
+</div>
 </nav>
-    
-
            
             <div id="content-area">
 
@@ -79,7 +96,7 @@ $query1 = mysqli_query($dbconn, $sql1);
               <script type="text/javascript">
 
         $(function() {
-            $('#content-area').keditor();
+          
             $('#save').click(function()  {
                  
                  $.ajax ({
