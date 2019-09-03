@@ -1,5 +1,6 @@
 <?php require "login/loginheader.php";
 
+
 require "login/dbconf.php";
 $dbconn = mysqli_connect( $host, $username, $password, $db_name);
 
@@ -18,12 +19,13 @@ if(isset( $_SESSION['username'] ) ) {
 }
 
 
-if( isset( $_POST['action'] ) ){
+if(isset( $_POST['action'] ) ){
 $content  = mysqli_real_escape_string($dbconn, $_POST['content']);
 $sql1 = " UPDATE `members` SET `content`='".$content."' WHERE `username`='".$thisUser."'"; 
 $query1 = mysqli_query($dbconn, $sql1);
 
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -39,13 +41,10 @@ $query1 = mysqli_query($dbconn, $sql1);
         <link rel="stylesheet" type="text/css" href="dist/css/keditor-components.css" data-type="keditor-style" />
         <!-- End of KEditor styles -->
         <link rel="stylesheet" type="text/css" href="./plugins/code-prettify/src/prettify.css" />
-        
         <link rel="stylesheet" type="text/css" href="./css/examples.css" />
-        <script>
-        $.widget.bridge('uiButton', $.ui.button);
-        $.widget.bridge('uitooltip, $.ui.tooltip');
-        $.fn.button = bsButton;
-        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        
+       
         
     </head>
     
@@ -70,7 +69,7 @@ $query1 = mysqli_query($dbconn, $sql1);
 
 <li><a href="#"id="save">Save</a></li>
 <li><a href="#">View</a></li>  
-<li><a href="login/loginout.php">Logout</a></li>  
+<li><a href="login/logout.php">Logout</a></li>  
 </ul>
 
 </div>
@@ -80,6 +79,7 @@ $query1 = mysqli_query($dbconn, $sql1);
             <div id="content-area">
 
             <?php
+         
                 $sql2 = "SELECT `content` FROM `members` WHERE `username`='".$thisUser."'";
                 $query2 = mysqli_query($dbconn, $sql2);
                 $row = mysqli_fetch_assoc($query2);
@@ -92,12 +92,12 @@ $query1 = mysqli_query($dbconn, $sql1);
             
             
             </div>    
-
+           
               <script type="text/javascript">
 
-        $(function() {
-          
-            $('#save').click(function()  {
+                     $(function() {
+                    $('#content-area').keditor();
+                    $('#save').click(function()  {
                  
                  $.ajax ({
                     type: 'post',
@@ -106,6 +106,7 @@ $query1 = mysqli_query($dbconn, $sql1);
                     },
 
                     success: function(data){
+                        console.log(data);
                     
                         alert("saved");
 
@@ -122,6 +123,7 @@ $query1 = mysqli_query($dbconn, $sql1);
         });
 
         </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script type="text/javascript" src="./plugins/jquery-1.11.3/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="./plugins/bootstrap-3.4.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="./plugins/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
