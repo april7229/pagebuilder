@@ -15,6 +15,9 @@ function clean($str){
 
 if(isset( $_GET['user'] ) ) {
     $thisUser = clean($_GET['user']);
+}else{
+    $thisUser = 'admin';
+
 }
 
 
@@ -49,6 +52,7 @@ $query1 = mysqli_query($dbconn, $sql1);
 
 <button type='button' class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse" >
 <span class="sr-only"> Toggle navigation</span>
+<span class="icon-bar"></span>
 <span class="icon-bar"></span>
 <span class="icon-bar"></span>
 </button>
@@ -98,6 +102,6 @@ $query1 = mysqli_query($dbconn, $sql1);
         <script type="text/javascript" src="./plugins/code-prettify/src/prettify.js"></script>
         <script type="text/javascript" src="./plugins/js-beautify-1.7.5/js/lib/beautify.js"></script>
         <script type="text/javascript" src="./plugins/js-beautify-1.7.5/js/lib/beautify-html.js"></script>
-       
-    </body>
+      
+        
 </html>

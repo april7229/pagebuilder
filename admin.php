@@ -14,7 +14,7 @@ function clean($str){
     return $str;
 }
 
-if(isset( $_SESSION['username'] ) ) {
+if( isset( $_SESSION['username'] ) ) {
     $thisUser = clean($_SESSION['username']);
 }
 
@@ -68,7 +68,7 @@ $query1 = mysqli_query($dbconn, $sql1);
 <ul class="nav navbar-nav">
 
 <li><a href="#"id="save">Save</a></li>
-<li><a href="#">View</a></li>  
+<li><a href="./?user=<?php echo $thisUser;?>"target="_blank">View</a></li>  
 <li><a href="login/logout.php">Logout</a></li>  
 </ul>
 
@@ -94,19 +94,19 @@ $query1 = mysqli_query($dbconn, $sql1);
             </div>    
            
               <script type="text/javascript">
-
                      $(function() {
+
                     $('#content-area').keditor();
-                    $('#save').click(function()  {
+
+                    $('#save').click(function(){
                  
-                 $.ajax ({
-                    type: 'post',
-                    data: {action: "send-content",
-                            content: $('#content-area').keditor('getContent')
+                       $.ajax ({
+                        type: 'post',
+                        data: {action: "send-content",
+                               content: $('#content-area').keditor('getContent')
                     },
 
-                    success: function(data){
-                        console.log(data);
+                        success: function(data){
                     
                         alert("saved");
 

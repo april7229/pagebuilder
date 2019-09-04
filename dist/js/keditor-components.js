@@ -261,3 +261,41 @@ eval("module.exports = __WEBPACK_EXTERNAL_MODULE_keditor__;//# sourceURL=[module
 
 /******/ });
 });
+
+var photoEdit = form.find('#photo-edit');
+var fileInput = photoEdit.next();
+photoEdit.on('click', function (e){
+    e.preventDefault();
+
+var inputData = prompt('Please enter imgur URL in here:');
+ 
+ 
+ if (inputData.split("/")[2] == "i.imgur.com" && (inputData.split(".")[3] == "jpg" || inputData.split(".")[3] == "png")) {
+ var img =  keditor.getSettingComponent().find('img');
+ img.attr('src', inputData);
+ img.css({
+   width: '',
+   height: ''
+ });
+ img.load(function(){
+   keditor.showSettingPanel(keditor.getSettingComponent(), options);
+ });
+
+//  ('.embed-responsive-item').attr('src', 'https://www.youtube.com')
+
+ } else {
+   alert ('your youtube URL is invalid!');
+ }
+
+
+  // fileInput.trigger('click');
+})
+
+
+
+var inputAlign = form.find('#photo-align');
+inputAlign.on('change', function() {
+  var panel = keditor.getSettingComponenet().find('.photo-panel');
+  panel.css('text-align', this.value);
+
+});
