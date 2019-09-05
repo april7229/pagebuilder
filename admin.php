@@ -14,7 +14,7 @@ function clean($str){
     return $str;
 }
 
-if( isset( $_SESSION['username'] ) ) {
+if(isset( $_SESSION['username'] ) ) {
     $thisUser = clean($_SESSION['username']);
 }
 
@@ -43,7 +43,7 @@ $query1 = mysqli_query($dbconn, $sql1);
         <link rel="stylesheet" type="text/css" href="./plugins/code-prettify/src/prettify.css" />
         <link rel="stylesheet" type="text/css" href="./css/examples.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        
+    
        
         
     </head>
